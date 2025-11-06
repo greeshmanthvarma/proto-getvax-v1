@@ -15,6 +15,50 @@ function App() {
     return savedMode === 'true'
   })
 
+  // Add checkbox tracking state
+  const [checkedVaccines, setCheckedVaccines] = useState({})
+
+  // Add function to toggle checkboxes
+  const toggleVaccineCheck = (vaccineName) => {
+    setCheckedVaccines(prev => ({
+      ...prev,
+      [vaccineName]: !prev[vaccineName]
+    }))
+  }
+
+  const toggleAllVaccines = () => {
+    // Check if all are currently checked
+    const allChecked = recommendations.every(vaccine => checkedVaccines[vaccine.name])
+    
+    if (allChecked) {
+      // If all checked, clear all
+      setCheckedVaccines({})
+    } else {
+      // If not all checked, check all
+      const newChecked = {}
+      recommendations.forEach(vaccine => {
+        newChecked[vaccine.name] = true
+      })
+      setCheckedVaccines(newChecked)
+    }
+  }
+
+  // Helper function to check if all are checked
+  const areAllChecked = () => {
+    if (!recommendations || recommendations.length === 0) return false
+    return recommendations.every(vaccine => checkedVaccines[vaccine.name])
+  }
+
+  // Helper function for indeterminate state (some checked, not all)
+  const areSomeChecked = () => {
+    if (!recommendations || recommendations.length === 0) return false
+    const checkedCount = recommendations.filter(vaccine => checkedVaccines[vaccine.name]).length
+    return checkedCount > 0 && checkedCount < recommendations.length
+  }
+
+
+
+
   // Apply dark mode class and save preference
   useEffect(() => {
     if (darkMode) {
@@ -166,7 +210,9 @@ function App() {
     setSelectedConditions([])
     setRecommendations(null)
     setErrors({})
+    setCheckedVaccines({})  
   }
+
 
   const printRecommendations = () => {
     window.print()
@@ -299,7 +345,7 @@ function App() {
                       )}
                     </p>
                     <button onClick={printRecommendations} className="btn btn-print">
-                      🖨️ Print Recommendations
+                      Print Recommendations
                     </button>
                   </div>
 
@@ -311,6 +357,19 @@ function App() {
                     <span className="legend-item contraindicated">Contraindicated</span>
                   </div>
 
+                  <div className="completion-status">
+                    <strong>Vaccination Status: </strong> 
+                    {Object.values(checkedVaccines).filter(Boolean).length} of {recommendations.length} completed
+                    <div className="progress-bar">
+                      <div 
+                        className="progress-fill" 
+                        style={{
+                          width: `${(Object.values(checkedVaccines).filter(Boolean).length / recommendations.length) * 100}%`
+                        }}
+                      />
+                    </div>
+                  </div>
+
                   <div className="table-wrapper">
                     <table className="vaccine-table">
                       <thead>
@@ -319,8 +378,25 @@ function App() {
                           <th>Description</th>
                           <th>Recommendation</th>
                           <th>Frequency</th>
+
+                          <th className="checkbox-header">
+                            {/* <span>Completed</span> */}
+                            <label className="master-checkbox-label">
+                              <input
+                                type="checkbox"
+                                className="master-checkbox"
+                                checked={areAllChecked()}
+                                ref={(el) => {
+                                  if (el) el.indeterminate = areSomeChecked()
+                                }}
+                                onChange={toggleAllVaccines}
+                                aria-label="Toggle all vaccines"
+                              />
+                            </label>
+                          </th>
                         </tr>
                       </thead>
+
                       <tbody>
                         {recommendations.map((vaccine, index) => (
                           <tr 
@@ -328,11 +404,15 @@ function App() {
                             className={`priority-${vaccine.priority} ${vaccine.name === 'COVID-19' || vaccine.name === 'Influenza (Flu)' ? 'highlighted' : ''}`}
                           >
                             <td className="vaccine-name">
-                              {vaccine.name}
+                              <span className={checkedVaccines[vaccine.name] ? 'vaccine-checked' : ''}>
+                                {vaccine.name}
+                              </span>
                               {vaccine.priority === 'high' && <span className="priority-badge high">HIGH PRIORITY</span>}
                               {vaccine.priority === 'contraindicated' && <span className="priority-badge contraindicated">CONTRAINDICATED</span>}
                               {vaccine.priority === 'caution' && <span className="priority-badge caution">CAUTION</span>}
                             </td>
+
+
                             <td>{vaccine.description}</td>
                             <td>
                               <div>{vaccine.recommendation}</div>
@@ -346,7 +426,19 @@ function App() {
                                 </div>
                               )}
                             </td>
+
                             <td>{vaccine.frequency}</td>
+                            <td className="checkbox-cell">
+                              <input
+                                type="checkbox"
+                                id={`vaccine-${index}`}
+                                className="vaccine-checkbox"
+                                checked={checkedVaccines[vaccine.name] || false}
+                                onChange={() => toggleVaccineCheck(vaccine.name)}
+                                aria-label={`Mark ${vaccine.name} as completed`}
+                              />
+                            </td>
+
                           </tr>
                         ))}
                       </tbody>
