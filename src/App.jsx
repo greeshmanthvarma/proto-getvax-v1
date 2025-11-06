@@ -177,7 +177,7 @@ function App() {
       <header className="header">
         <div className="header-content">
           <h1>GetVax</h1>
-          <p className="subtitle">Get personalized vaccine recommendations based on your age, gender, and medical conditions</p>
+          <p className="subtitle">Get personalized vaccine recommendations based on your age, gender, and medical conditions/other indicators</p>
           <p className="disclaimer">
             ⚠️ This tool provides general guidance based on CDC schedules. Always consult with your healthcare provider.
           </p>
@@ -391,7 +391,8 @@ function App() {
 
       <footer className="footer">
         <p>
-          Data based on <a href="https://www.cdc.gov/vaccines/schedules/" target="_blank" rel="noopener noreferrer">CDC Immunization Schedules</a>
+          Data based on <a href="https://www.cdc.gov/vaccines/hcp/imz-schedules/adult-age.html" target="_blank" rel="noopener noreferrer">CDC Immunization Schedule by Age</a> and 
+          <a href="https://www.cdc.gov/vaccines/hcp/imz-schedules/adult-medical-condition.html" target="_blank" rel="noopener noreferrer">CDC Immunization Schedule by Medical Condition and Other Indications</a> 
         </p>
         <p>Last updated: November 2025</p>
         <p className="footer-disclaimer">
