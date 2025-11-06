@@ -176,7 +176,7 @@ function App() {
     <div className="app">
       <header className="header">
         <div className="header-content">
-          <h1>CDC Vaccine Recommendation Tool</h1>
+          <h1>GetVax</h1>
           <p className="subtitle">Get personalized vaccine recommendations based on your age, gender, and medical conditions</p>
           <p className="disclaimer">
             ⚠️ This tool provides general guidance based on CDC schedules. Always consult with your healthcare provider.
