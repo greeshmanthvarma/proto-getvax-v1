@@ -1,28 +1,27 @@
-# CDC Vaccine Recommendation Tool
+# Get Vaccine Recommendations
 
-A modern React + Vite web application that provides personalized vaccine recommendations based on CDC guidelines.
+A React + Vite web application that provides personalized vaccine recommendations based on CDC schedules.
 
 ## Features
 
-- Personalized vaccine recommendations based on age and gender
+- Personalized vaccine recommendations based on age and gender, and medical conditions/other indications
 - CDC-compliant immunization schedule data
 - Clean, responsive design
 - Gender-specific vaccine notes
 - Printable recommendations
-- Form validation
 
 ## Setup Instructions
 
 ### Prerequisites
 
 - Node.js (version 16 or higher)
-- npm or yarn
+- npm
 
 ### Installation
 
 1. Navigate to the project directory:
    ```bash
-   cd vaccine-recommender
+   cd proto-getvax-v1
    ```
 
 2. Install dependencies:
@@ -37,49 +36,30 @@ A modern React + Vite web application that provides personalized vaccine recomme
    npm run dev
    ```
 
-2. Open your browser and navigate to:
+2. Open the local link generated in the terminal:
    ```
-   http://localhost:5173
+   http://localhost:5173 (or similar)
    ```
-
-### Building for Production
-
-To create a production build:
-
-```bash
-npm run build
-```
-
-The built files will be in the `dist` directory.
-
-### Preview Production Build
-
-To preview the production build locally:
-
-```bash
-npm run preview
-```
 
 ## Project Structure
 
 ```
 vaccine-recommender/
-├── public/              # Static assets
 ├── src/
-│   ├── App.jsx         # Main application component
-│   ├── App.css         # Application styles
-│   ├── main.jsx        # Application entry point
-│   ├── index.css       # Global styles
-│   └── vaccine_data.json  # CDC vaccine data
-├── index.html          # HTML template
-├── package.json        # Dependencies and scripts
-├── vite.config.js      # Vite configuration
-└── README.md          # This file
+│   ├── App.jsx         
+│   ├── App.css        
+│   ├── main.jsx        
+│   ├── index.css       
+│   └── vaccine_data_enhanced.json 
+├── index.html          
+├── package.json        
+├── vite.config.js     
+└── README.md         
 ```
 
 ## Vaccine Data
 
-The application uses a JSON file (`vaccine_data.json`) containing CDC immunization schedule data for:
+The application uses a JSON file (`vaccine_data_enhanced.json`) containing CDC immunization schedule data for:
 
 - COVID-19
 - Influenza (Flu)
@@ -94,11 +74,26 @@ The application uses a JSON file (`vaccine_data.json`) containing CDC immunizati
 - RSV (Respiratory Syncytial Virus)
 - Meningococcal (MenACWY)
 
+And for medical conditions/other indications like:
+
+- Pregnancy
+- Immunocompromised (excluding HIV)
+- HIV infection (CD4 <15% or <200/mm³)
+- HIV infection (CD4 ≥15% and ≥200/mm³)
+- Men who have sex with men
+- Asplenia or complement deficiency
+- Heart or lung disease
+- Kidney failure, ESRD, or on dialysis
+- Chronic liver disease or alcoholism
+- Diabetes
+- Healthcare personnel
+
+
 ## Customization
 
 To update vaccine recommendations:
 
-1. Edit `src/vaccine_data.json`
+1. Edit `src/vaccine_data_enhanced.json`
 2. Follow the existing data structure
 3. Restart the development server
 
@@ -119,4 +114,4 @@ This tool provides general guidance based on CDC immunization schedules. Always 
 
 ## Data Source
 
-Based on CDC Immunization Schedules: https://www.cdc.gov/vaccines/schedules/
+Based on CDC Immunization Schedules: https://www.cdc.gov/vaccines/hcp/imz-schedules/adult-age.html#table-age and https://www.cdc.gov/vaccines/hcp/imz-schedules/adult-medical-condition.html
