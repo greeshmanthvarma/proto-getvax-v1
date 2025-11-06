@@ -392,7 +392,7 @@ function App() {
       <footer className="footer">
         <p>
           Data based on <a href="https://www.cdc.gov/vaccines/hcp/imz-schedules/adult-age.html" target="_blank" rel="noopener noreferrer">CDC Immunization Schedule by Age</a> and 
-          <a href="https://www.cdc.gov/vaccines/hcp/imz-schedules/adult-medical-condition.html" target="_blank" rel="noopener noreferrer">CDC Immunization Schedule by Medical Condition and Other Indications</a> 
+          <a href="https://www.cdc.gov/vaccines/hcp/imz-schedules/adult-medical-condition.html" target="_blank" rel="noopener noreferrer"> CDC Immunization Schedule by Medical Condition and Other Indications</a> 
         </p>
         <p>Last updated: November 2025</p>
         <p className="footer-disclaimer">
