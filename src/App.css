@@ -12,18 +12,49 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.app {
-  min-height: 100vh;
-  background: #f5f7fa;
-  display: flex;
-  flex-direction: column;
+/* CSS Variables for Light/Dark Mode */
+:root {
+  --bg-primary: #f5f7fa;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f8f9fa;
+  --text-primary: #333333;
+  --text-secondary: #6c757d;
+  --border-color: #e0e0e0;
+  --border-color-light: #e9ecef;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --card-hover: #ffffff;
 }
 
+.dark-mode {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #3a3a3a;
+  --text-primary: #e0e0e0;
+  --text-secondary: #a0a0a0;
+  --border-color: #404040;
+  --border-color-light: #505050;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --card-hover: #353535;
+}
+
+.app {
+  min-height: 100vh;
+  background: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Header */
 .header {
   background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
   color: white;
   padding: 2rem 1rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
 .header-content {
@@ -51,6 +82,31 @@ body {
   border-left: 4px solid #ffc107;
 }
 
+/* Dark Mode Toggle Button */
+.dark-mode-toggle {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dark-mode-toggle:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Main Content */
 .main-content {
   flex: 1;
   padding: 2rem 1rem;
@@ -70,16 +126,17 @@ body {
   }
 }
 
+/* Cards */
 .card {
-  background: white;
+  background: var(--bg-secondary);
   border-radius: 12px;
   padding: 2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  transition: box-shadow 0.3s ease;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
 .card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-md);
 }
 
 .card h2 {
@@ -88,6 +145,11 @@ body {
   font-size: 1.5rem;
 }
 
+.dark-mode .card h2 {
+  color: #5ba3ff;
+}
+
+/* Form Section */
 .form-section {
   position: sticky;
   top: 2rem;
@@ -109,12 +171,12 @@ body {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 500;
-  color: #333;
+  color: var(--text-primary);
 }
 
 .field-description {
   font-size: 0.875rem;
-  color: #6c757d;
+  color: var(--text-secondary);
   margin-bottom: 0.75rem;
   font-weight: normal;
 }
@@ -122,15 +184,21 @@ body {
 .form-group input[type="number"] {
   width: 100%;
   padding: 0.75rem;
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--border-color);
   border-radius: 8px;
   font-size: 1rem;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 .form-group input[type="number"]:focus {
   outline: none;
   border-color: #0066cc;
+}
+
+.dark-mode .form-group input[type="number"]:focus {
+  border-color: #5ba3ff;
 }
 
 .form-group input.error {
@@ -144,6 +212,7 @@ body {
   margin-top: 0.5rem;
 }
 
+/* Radio Buttons */
 .radio-group {
   display: flex;
   flex-direction: column;
@@ -155,14 +224,20 @@ body {
   align-items: center;
   cursor: pointer;
   padding: 0.75rem;
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--border-color);
   border-radius: 8px;
   transition: all 0.3s ease;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 .radio-label:hover {
-  background: #f8f9fa;
+  background: var(--bg-tertiary);
   border-color: #0066cc;
+}
+
+.dark-mode .radio-label:hover {
+  border-color: #5ba3ff;
 }
 
 .radio-label input[type="radio"] {
@@ -170,6 +245,11 @@ body {
   width: 20px;
   height: 20px;
   cursor: pointer;
+  accent-color: #0066cc;
+}
+
+.dark-mode .radio-label input[type="radio"] {
+  accent-color: #5ba3ff;
 }
 
 .radio-label input[type="radio"]:checked + span {
@@ -177,7 +257,11 @@ body {
   color: #0066cc;
 }
 
-/* Checkbox styles for medical conditions */
+.dark-mode .radio-label input[type="radio"]:checked + span {
+  color: #5ba3ff;
+}
+
+/* Checkboxes */
 .checkbox-group {
   display: flex;
   flex-direction: column;
@@ -185,9 +269,9 @@ body {
   max-height: 300px;
   overflow-y: auto;
   padding: 0.5rem;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
-  background: #f8f9fa;
+  background: var(--bg-tertiary);
 }
 
 .checkbox-label {
@@ -197,11 +281,16 @@ body {
   padding: 0.5rem 0.75rem;
   border-radius: 6px;
   transition: all 0.2s ease;
-  background: white;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 .checkbox-label:hover {
-  background: #e7f3ff;
+  background: var(--bg-tertiary);
+}
+
+.dark-mode .checkbox-label:hover {
+  background: #454545;
 }
 
 .checkbox-label input[type="checkbox"] {
@@ -212,11 +301,20 @@ body {
   accent-color: #0066cc;
 }
 
+.dark-mode .checkbox-label input[type="checkbox"] {
+  accent-color: #5ba3ff;
+}
+
 .checkbox-label input[type="checkbox"]:checked + span {
   font-weight: 500;
   color: #0066cc;
 }
 
+.dark-mode .checkbox-label input[type="checkbox"]:checked + span {
+  color: #5ba3ff;
+}
+
+/* Buttons */
 .button-group {
   display: flex;
   gap: 1rem;
@@ -256,6 +354,14 @@ body {
   box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
 }
 
+.dark-mode .btn-secondary {
+  background: #5a6268;
+}
+
+.dark-mode .btn-secondary:hover {
+  background: #4a5258;
+}
+
 .btn-print {
   background: #28a745;
   color: white;
@@ -268,10 +374,11 @@ body {
   background: #218838;
 }
 
+/* Placeholder */
 .placeholder {
   text-align: center;
   padding: 3rem 1rem;
-  color: #6c757d;
+  color: var(--text-secondary);
 }
 
 .placeholder-icon {
@@ -282,7 +389,7 @@ body {
 }
 
 .placeholder h2 {
-  color: #6c757d;
+  color: var(--text-secondary);
   margin-bottom: 0.75rem;
 }
 
@@ -291,12 +398,13 @@ body {
   line-height: 1.6;
 }
 
+/* Results */
 .results-header {
   margin-bottom: 2rem;
 }
 
 .results-subtitle {
-  color: #6c757d;
+  color: var(--text-secondary);
   font-size: 1.1rem;
   margin-bottom: 1rem;
 }
@@ -306,6 +414,10 @@ body {
   font-weight: 600;
 }
 
+.dark-mode .condition-count {
+  color: #5ba3ff;
+}
+
 /* Priority Legend */
 .priority-legend {
   display: flex;
@@ -313,7 +425,7 @@ body {
   gap: 1rem;
   align-items: center;
   padding: 1rem;
-  background: #f8f9fa;
+  background: var(--bg-tertiary);
   border-radius: 8px;
   margin-bottom: 1.5rem;
   font-size: 0.875rem;
@@ -353,6 +465,32 @@ body {
   border: 1px solid #dc3545;
 }
 
+/* Dark mode legend items */
+.dark-mode .legend-item.high {
+  background: #665d00;
+  color: #ffd966;
+  border: 1px solid #ffc107;
+}
+
+.dark-mode .legend-item.standard {
+  background: #1e3a52;
+  color: #5ba3ff;
+  border: 1px solid #5ba3ff;
+}
+
+.dark-mode .legend-item.caution {
+  background: #664400;
+  color: #ffb84d;
+  border: 1px solid #ff9800;
+}
+
+.dark-mode .legend-item.contraindicated {
+  background: #5c1a1a;
+  color: #ffcccc;
+  border: 1px solid #dc3545;
+}
+
+/* Table */
 .table-wrapper {
   overflow-x: auto;
   margin-bottom: 2rem;
@@ -362,10 +500,35 @@ body {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.95rem;
+  table-layout: fixed;
+}
+
+.vaccine-table th:nth-child(1),
+.vaccine-table td:nth-child(1) {
+  width: 20%;
+}
+
+.vaccine-table th:nth-child(2),
+.vaccine-table td:nth-child(2) {
+  width: 25%;
+}
+
+.vaccine-table th:nth-child(3),
+.vaccine-table td:nth-child(3) {
+  width: 40%;
+}
+
+.vaccine-table th:nth-child(4),
+.vaccine-table td:nth-child(4) {
+  width: 15%;
 }
 
 .vaccine-table thead {
   background: #f8f9fa;
+}
+
+.dark-mode .vaccine-table thead {
+  background: var(--bg-tertiary);
 }
 
 .vaccine-table th {
@@ -376,11 +539,20 @@ body {
   border-bottom: 2px solid #dee2e6;
 }
 
+.dark-mode .vaccine-table th {
+  color: #5ba3ff;
+  border-bottom-color: var(--border-color);
+}
+
 .vaccine-table td {
   padding: 1rem;
-  border-bottom: 1px solid #e9ecef;
   vertical-align: top;
+  color: var(--text-primary);
 }
+
+/* .dark-mode .vaccine-table td {
+  border-bottom-color: var(--border-color-light);
+} */
 
 .vaccine-table tbody tr {
   transition: background-color 0.2s ease;
@@ -388,6 +560,10 @@ body {
 
 .vaccine-table tbody tr:hover {
   background: #f8f9fa;
+}
+
+.dark-mode .vaccine-table tbody tr:hover {
+  background: var(--bg-tertiary);
 }
 
 .vaccine-table tbody tr.highlighted {
@@ -398,10 +574,27 @@ body {
   background: #ffe69c;
 }
 
-/* Priority-based row highlighting */
+/* Dark mode table rows with better contrast */
+.dark-mode .vaccine-table tbody tr.highlighted {
+  background: #4a4128;
+}
+
+.dark-mode .vaccine-table tbody tr.highlighted:hover {
+  background: #5a5138;
+}
+
 .vaccine-table tbody tr.priority-high {
   background: #fff9e6;
   border-left: 4px solid #ffc107;
+}
+
+.dark-mode .vaccine-table tbody tr.priority-high {
+  background: #4a4128;
+  border-left-color: #ffc107;
+}
+
+.dark-mode .vaccine-table tbody tr.priority-high:hover {
+  background: #5a5138;
 }
 
 .vaccine-table tbody tr.priority-contraindicated {
@@ -409,19 +602,37 @@ body {
   border-left: 4px solid #dc3545;
 }
 
+.dark-mode .vaccine-table tbody tr.priority-contraindicated {
+  background: #3d2020;
+  border-left-color: #dc3545;
+}
+
 .vaccine-table tbody tr.priority-caution {
   background: #fff8e6;
   border-left: 4px solid #ff9800;
 }
 
+.dark-mode .vaccine-table tbody tr.priority-caution {
+  background: #3d3020;
+  border-left-color: #ff9800;
+}
+
+
+/* Vaccine Name Column */
 .vaccine-name {
   font-weight: 600;
   color: #0066cc;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  align-items: flex-start;
 }
 
+.dark-mode .vaccine-name {
+  color: #5ba3ff;
+}
+
+/* Priority Badges */
 .priority-badge {
   display: inline-block;
   padding: 0.25rem 0.5rem;
@@ -446,13 +657,36 @@ body {
   color: white;
 }
 
-/* Condition-specific recommendations within table */
+/* Dark mode priority badges */
+.dark-mode .priority-badge.high {
+  background: #665d00;
+  color: #ffd966;
+  border: 1px solid #ffc107;
+}
+
+.dark-mode .priority-badge.contraindicated {
+  background: #5c1a1a;
+  color: #ffcccc;
+  border: 1px solid #dc3545;
+}
+
+.dark-mode .priority-badge.caution {
+  background: #664400;
+  color: #ffb84d;
+  border: 1px solid #ff9800;
+}
+
+/* Condition Notes */
 .condition-notes {
   margin-top: 0.75rem;
   padding: 0.75rem;
   background: #f8f9fa;
   border-radius: 6px;
   font-size: 0.875rem;
+}
+
+.dark-mode .condition-notes {
+  background: var(--bg-tertiary);
 }
 
 .condition-note {
@@ -464,6 +698,11 @@ body {
   color: #0066cc;
 }
 
+.dark-mode .condition-note strong {
+  color: #5ba3ff;
+}
+
+/* Special Notes */
 .special-notes {
   background: #fff3cd;
   padding: 1.5rem;
@@ -472,10 +711,19 @@ body {
   border-left: 4px solid #ffc107;
 }
 
+.dark-mode .special-notes {
+  background: #3d3520;
+  border-left-color: #ffc107;
+}
+
 .special-notes h3 {
   color: #856404;
   margin-bottom: 1rem;
   font-size: 1.1rem;
+}
+
+.dark-mode .special-notes h3 {
+  color: #ffc107;
 }
 
 .special-notes ul {
@@ -497,6 +745,13 @@ body {
   color: #721c24;
 }
 
+.dark-mode .contraindication-note {
+  background: #3d2020;
+  border-left-color: #dc3545;
+  color: #ffcccc;
+}
+
+/* Info Box */
 .info-box {
   background: #e7f3ff;
   padding: 1rem;
@@ -506,11 +761,23 @@ body {
   line-height: 1.6;
 }
 
+.dark-mode .info-box {
+  background: #1e3a52;
+  border-left-color: #5ba3ff;
+  color: var(--text-primary);
+}
+
+/* Footer */
 .footer {
   background: #333;
   color: white;
   padding: 2rem 1rem;
   text-align: center;
+}
+
+.dark-mode .footer {
+  background: #0d0d0d;
+  border-top: 1px solid var(--border-color);
 }
 
 .footer p {
@@ -520,6 +787,10 @@ body {
 .footer a {
   color: #00a0dc;
   text-decoration: none;
+}
+
+.dark-mode .footer a {
+  color: #5ba3ff;
 }
 
 .footer a:hover {
@@ -532,11 +803,35 @@ body {
   margin-top: 1rem;
 }
 
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dark-mode-toggle {
+    position: static;
+    margin-top: 1rem;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 1024px) {
+  .vaccine-table {
+    table-layout: auto;
+  }
+
+  .vaccine-table th,
+  .vaccine-table td {
+    width: auto !important;
+    min-width: 120px;
+  }
+}
+
+/* Print Styles */
 @media print {
   .header,
   .form-section,
   .btn-print,
-  .footer {
+  .footer,
+  .dark-mode-toggle {
     display: none;
   }
 
@@ -550,5 +845,10 @@ body {
 
   .priority-legend {
     display: none;
+  }
+
+  .app {
+    background: white;
+    color: black;
   }
 }

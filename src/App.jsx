@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import vaccineData from './vaccine_data_enhanced.json'
 
@@ -8,6 +8,27 @@ function App() {
   const [selectedConditions, setSelectedConditions] = useState([])
   const [recommendations, setRecommendations] = useState(null)
   const [errors, setErrors] = useState({})
+
+  // Dark mode state
+  const [darkMode, setDarkMode] = useState(() => {
+    const savedMode = localStorage.getItem('darkMode')
+    return savedMode === 'true'
+  })
+
+  // Apply dark mode class and save preference
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark-mode')
+    } else {
+      document.documentElement.classList.remove('dark-mode')
+    }
+    localStorage.setItem('darkMode', darkMode)
+  }, [darkMode])
+
+  // Toggle dark mode
+  const toggleDarkMode = () => {
+    setDarkMode(prev => !prev)
+  }
 
   const validateForm = () => {
     const newErrors = {}
@@ -155,11 +176,18 @@ function App() {
     <div className="app">
       <header className="header">
         <div className="header-content">
-          <h1>Vaccine Recommendation Tool</h1>
+          <h1>CDC Vaccine Recommendation Tool</h1>
           <p className="subtitle">Get personalized vaccine recommendations based on your age, gender, and medical conditions</p>
           <p className="disclaimer">
             ⚠️ This tool provides general guidance based on CDC schedules. Always consult with your healthcare provider.
           </p>
+          <button 
+            onClick={toggleDarkMode} 
+            className="dark-mode-toggle"
+            aria-label="Toggle dark mode"
+          >
+            {darkMode ? '☀️' : '🌙'}
+          </button>
         </div>
       </header>
 
@@ -363,8 +391,7 @@ function App() {
 
       <footer className="footer">
         <p>
-          Data based on <a href="https://www.cdc.gov/vaccines/hcp/imz-schedules/adult-age.html#table-age" target="_blank" rel="noopener noreferrer">CDC Immunization Schedule By Age</a> and 
-          <a href="https://www.cdc.gov/vaccines/hcp/imz-schedules/adult-medical-condition.html" target="_blank" rel="noopener noreferrer"> CDC Immunization Schedule By Medical Condition and Other Indications</a>
+          Data based on <a href="https://www.cdc.gov/vaccines/schedules/" target="_blank" rel="noopener noreferrer">CDC Immunization Schedules</a>
         </p>
         <p>Last updated: November 2025</p>
         <p className="footer-disclaimer">

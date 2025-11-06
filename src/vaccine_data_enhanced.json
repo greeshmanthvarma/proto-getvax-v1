@@ -603,6 +603,38 @@
           "priority": "high"
         }
       }
+    },
+    {
+      "name": "Inactivated Poliovirus (IPV)",
+      "age_groups": [
+        {
+          "min": 19,
+          "max": 120,
+          "recommendation": "Complete 3-dose series if incompletely vaccinated. Self-report of previous doses acceptable"
+        }
+      ],
+      "gender_specific": false,
+      "description": "Protection against polio",
+      "frequency": "3-dose series if never completed childhood vaccination",
+      "medical_conditions": {
+        "immunocompromised": {
+          "recommendation": "Complete 3-dose series if not previously vaccinated",
+          "priority": "standard"
+        },
+        "hiv_low": {
+          "recommendation": "Complete 3-dose series if not previously vaccinated",
+          "priority": "standard"
+        },
+        "hiv_high": {
+          "recommendation": "Complete 3-dose series if not previously vaccinated",
+          "priority": "standard"
+        },
+        "healthcare": {
+          "recommendation": "Complete 3-dose series if not previously vaccinated or at increased risk",
+          "priority": "high"
+        }
+      }
     }
+
   ]
 }
