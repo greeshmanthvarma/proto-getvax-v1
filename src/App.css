@@ -221,6 +221,7 @@ body {
 
 .radio-label {
   display: flex;
+  flex-direction: row;
   align-items: center;
   cursor: pointer;
   padding: 0.75rem;
@@ -258,9 +259,9 @@ body {
 }
 
 .radio-label span {
-  display: flex;
-  align-items: center;
+  display: inline-block;
   line-height: 1.5;
+  white-space: normal;
 }
 
 .radio-label input[type="radio"]:checked + span {
@@ -287,6 +288,7 @@ body {
 
 .checkbox-label {
   display: flex;
+  flex-direction: row;
   align-items: center;
   cursor: pointer;
   padding: 0.5rem 0.75rem;
@@ -322,9 +324,10 @@ body {
 }
 
 .checkbox-label span {
-  display: flex;
-  align-items: center;
+  display: inline-block;
   line-height: 1.5;
+  white-space: normal;
+  word-wrap: break-word;
 }
 
 .checkbox-label input[type="checkbox"]:checked + span {
