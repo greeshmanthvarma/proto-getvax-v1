@@ -456,7 +456,7 @@ function App() {
                     </table>
                   </div>
 
-                  {(recommendations.some(v => v.genderNote) || recommendations.some(v => v.priority === 'contraindicated')) && (
+                  {/* {(recommendations.some(v => v.genderNote) || recommendations.some(v => v.priority === 'contraindicated')) && (
                     <div className="special-notes">
                       <h3>⚠️ Important Notes</h3>
                       <ul>
@@ -477,7 +477,7 @@ function App() {
                           ))}
                       </ul>
                     </div>
-                  )}
+                  )} */}
 
                   <div className="info-box">
                     <strong>Important:</strong> These recommendations are based on CDC guidelines for routine vaccinations
