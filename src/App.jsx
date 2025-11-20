@@ -587,7 +587,20 @@ function App() {
                     </p>
                     <Button onClick={printRecommendations} variant="outline" size="sm" className="mb-4 print:hidden">
                       Print Recommendations
-                    </Button>
+                    </button>
+                  </div>
+
+                  <div className="completion-status">
+                    <strong>Vaccination Status: </strong> 
+                    {Object.values(checkedVaccines).filter(Boolean).length} of {recommendations.length} completed
+                    <div className="progress-bar">
+                      <div 
+                        className="progress-fill" 
+                        style={{
+                          width: `${(Object.values(checkedVaccines).filter(Boolean).length / recommendations.length) * 100}%`
+                        }}
+                      />
+                    </div>
                   </div>
 
                   <div className="mb-8">
@@ -604,34 +617,18 @@ function App() {
                         {recommendations.map((vaccine, index) => (
                           <TableRow 
                             key={index} 
-                            className={vaccine.name === 'COVID-19' || vaccine.name === 'Influenza (Flu)' ? 'bg-accent/10' : ''}
+                            className={vaccine.name === 'COVID-19' || vaccine.name === 'Influenza (Flu)' ? 'highlighted' : ''}
                           >
-                            <TableCell className="align-top">
-                              <div className="font-semibold text-primary flex flex-col gap-2 items-start">
-                                <span>{vaccine.name}</span>
-                                {vaccine.previouslyReceived && (
-                                  <span className="text-xs text-muted-foreground">
-                                    Received {vaccine.dosesReceived || 0} dose{(vaccine.dosesReceived || 0) > 1 ? 's' : ''}{vaccine.lastReceivedDate ? ` (last: ${new Date(vaccine.lastReceivedDate).toLocaleDateString()})` : ''}
-                                  </span>
-                                )}
-                              </div>
-                            </TableCell>
-                            <TableCell className="align-top">{vaccine.description}</TableCell>
-                            <TableCell className="align-top">
-                              <div>
-                                {vaccine.needsMoreDoses && (
-                                  <div className="text-xs text-primary font-semibold block mb-2 flex items-start gap-2">
-                                    <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
-                                    <span>You've received {vaccine.dosesReceived} of {vaccine.requiredDoses} required dose{vaccine.requiredDoses > 1 ? 's' : ''}. Additional dose{vaccine.requiredDoses - vaccine.dosesReceived > 1 ? 's' : ''} needed.</span>
-                                  </div>
-                                )}
-                                {vaccine.previouslyReceived && !vaccine.needsMoreDoses && (
-                                  <span className="text-xs text-muted-foreground block mb-2 italic">
-                                    You've completed the required doses ({vaccine.dosesReceived} of {vaccine.requiredDoses}). {vaccine.frequency.includes('booster') || vaccine.frequency.includes('annual') ? 'You may need a booster or updated dose.' : 'Please consult with your healthcare provider about timing for next dose.'}
-                                  </span>
-                                )}
-                                {vaccine.recommendation}
-                              </div>
+                            <td className="vaccine-name">
+                              <span className={checkedVaccines[vaccine.name] ? 'vaccine-checked' : ''}>
+                                {vaccine.name}
+                              </span>
+                            </td>
+
+
+                            <td>{vaccine.description}</td>
+                            <td>
+                              <div>{vaccine.recommendation}</div>
                               {vaccine.conditionRecommendations && vaccine.conditionRecommendations.length > 0 && (
                                 <div className="mt-3 p-3 bg-muted rounded-md text-xs">
                                   {vaccine.conditionRecommendations.map((cr, idx) => (
@@ -649,6 +646,28 @@ function App() {
                     </Table>
                   </div>
 
+                  {/* {(recommendations.some(v => v.genderNote) || recommendations.some(v => v.priority === 'contraindicated')) && (
+                    <div className="special-notes">
+                      <h3>⚠️ Important Notes</h3>
+                      <ul>
+                        {recommendations
+                          .filter(v => v.priority === 'contraindicated')
+                          .map((vaccine, index) => (
+                            <li key={`contra-${index}`} className="contraindication-note">
+                              <strong>{vaccine.name}:</strong> This vaccine is contraindicated for your selected condition(s). 
+                              Do not receive this vaccine without consulting your healthcare provider.
+                            </li>
+                          ))}
+                        {recommendations
+                          .filter(v => v.genderNote)
+                          .map((vaccine, index) => (
+                            <li key={`gender-${index}`}>
+                              <strong>{vaccine.name}:</strong> {vaccine.genderNote}
+                            </li>
+                          ))}
+                      </ul>
+                    </div>
+                  )} */}
 
                   <div className="flex justify-center mt-8 mb-8">
                     <Button onClick={proceedToVaccineRequest} size="lg" className="print:hidden">
